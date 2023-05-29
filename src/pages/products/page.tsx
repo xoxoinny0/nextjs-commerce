@@ -4,6 +4,8 @@ import Image from 'next/image'
 import { Pagination } from '@mantine/core'
 import { CATEGORY_MAP, TAKE } from 'constants/products'
 import { SegmentedControl } from '@mantine/core'
+import { Select } from '@mantine/core'
+import { FILTERS } from 'constants/products'
 
 export default function Products() {
   const [products, setProducts] = useState<products[]>([])
@@ -11,6 +13,7 @@ export default function Products() {
   const [total, setTotal] = useState(0)
   const [categories, setCategories] = useState<categories[]>([])
   const [selectedCategory, setCategory] = useState<string>('-1')
+  const [selectedFilter, setFilter] = useState<string | null>(FILTERS[0].value)
 
   useEffect(() => {
     fetch('/api/get-categories')
@@ -35,6 +38,8 @@ export default function Products() {
 
   return (
     <div className="px-36 mt-36 mb-36">
+      <Select value={selectedFilter} onChange={setFilter} data={FILTERS} />
+
       {categories && (
         <div className="mb-4">
           <SegmentedControl
