@@ -12,8 +12,10 @@ import useDebounce from 'hooks/useDebounce'
 // 캐시 활용
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export default function Products() {
+  const router = useRouter()
   const { data: session } = useSession()
   const [activePage, setPage] = useState(1)
   const [selectedCategory, setCategory] = useState<string>('-1')
@@ -21,12 +23,6 @@ export default function Products() {
   const [keyword, setKeyword] = useState('')
 
   const debouncedKeyword = useDebounce<string>(keyword)
-
-  // useEffect(() => {
-  //   fetch('/api/get-categories')
-  //     .then((res) => res.json())
-  //     .then((data) => setCategories(data.items))
-  // }, [])
 
   const { data: categories } = useQuery<
     { items: categories[] },
@@ -38,14 +34,6 @@ export default function Products() {
     { select: (data) => data.items }
   )
 
-  // useEffect(() => {
-  //   fetch(
-  //     `/api/get-products-count?category=${selectedCategory}&contains=${debouncedKeyword}`
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => setTotal(Math.ceil(data.items / TAKE)))
-  // }, [selectedCategory, debouncedKeyword])
-
   const { data: total } = useQuery(
     [
       `/api/get-products-count?category=${selectedCategory}&contains=${debouncedKeyword}`,
@@ -55,15 +43,6 @@ export default function Products() {
         `/api/get-products-count?category=${selectedCategory}&contains=${debouncedKeyword}`
       ).then((res) => res.json().then((data) => Math.ceil(data.items / TAKE)))
   )
-
-  // useEffect(() => {
-  //   const skip = TAKE * (activePage - 1)
-  //   fetch(
-  //     `/api/get-products?skip=${skip}&take=${TAKE}&category=${selectedCategory}&orderBy=${selectedFilter}&contains=${debouncedKeyword}`
-  //   )
-  //     .then((res) => res.json())
-  //     .then((data) => setProducts(data.items))
-  // }, [activePage, selectedCategory, selectedFilter, debouncedKeyword])
 
   const { data: products } = useQuery<
     { items: products[] },
@@ -92,9 +71,15 @@ export default function Products() {
 
   return (
     <div className="px-36 mt-36 mb-36">
-      {session && <p>안녕하세요. {session.user?.name}님</p>}
+      {session && (
+        <p>
+          안녕하세요.{' '}
+          <span className="font-semibold">{session.user?.name}</span>님😄
+        </p>
+      )}
       <div>
         <Input
+          className="mt-4"
           icon={<IconSearch />}
           placeholder="Search"
           value={keyword}
@@ -126,7 +111,11 @@ export default function Products() {
       {products && (
         <div className="grid grid-cols-3 gap-5">
           {products.map((item) => (
-            <div key={item.id} style={{ maxWidth: 310 }}>
+            <div
+              key={item.id}
+              style={{ maxWidth: 310, cursor: 'pointer' }}
+              onClick={() => router.push(`/products/${item.id}`)}
+            >
               <Image
                 className="rounded"
                 src={item.image_url ?? ''}

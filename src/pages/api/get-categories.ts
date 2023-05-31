@@ -24,7 +24,6 @@ export default async function handler(
 ) {
   try {
     const products = await getCategories()
-
     res.status(200).json({ items: products, message: 'Success' })
   } catch {
     res.status(400).json({ message: 'Failed' })
