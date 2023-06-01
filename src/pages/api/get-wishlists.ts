@@ -5,15 +5,30 @@ import { getServerSession } from 'next-auth/next'
 
 const prisma = new PrismaClient()
 
-async function getWishList(userId: string) {
+async function getWishLists(userId: string) {
   try {
-    const response = await prisma.wishList.findUnique({
+    const wishlist = await prisma.wishList.findUnique({
       where: {
         userId: userId,
       },
     })
-    console.log(response)
-    return response?.productIds.split(',')
+
+    const productsId = wishlist?.productIds
+      .split(',')
+      .map((item) => Number(item))
+
+    if (productsId && productsId.length > 0) {
+      const response = await prisma.products.findMany({
+        where: {
+          id: {
+            in: productsId,
+          },
+        },
+      })
+      console.log(response)
+      return response
+    }
+    return []
   } catch (error) {
     console.error(error)
   }
@@ -36,7 +51,7 @@ export default async function handler(
 
   try {
     if (session.user) {
-      const wishlist = await getWishList(String(session.id))
+      const wishlist = await getWishLists(String(session.id))
       res.status(200).json({ items: wishlist, message: 'Success' })
     }
   } catch {

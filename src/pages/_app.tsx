@@ -6,6 +6,7 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { SessionProvider } from 'next-auth/react'
+import Header from '@components/Header'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,7 +21,10 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />
+        <div className="px-36">
+          <Header />
+          <Component {...pageProps} />
+        </div>
       </QueryClientProvider>
     </SessionProvider>
   )

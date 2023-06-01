@@ -23,7 +23,8 @@ export const authOptions: NextAuthOptions = {
       console.log('세션', session)
 
       session.id = user.id
-      return Promise.resolve(session)
+      // return Promise.resolve(session)
+      return session
     },
   },
 }

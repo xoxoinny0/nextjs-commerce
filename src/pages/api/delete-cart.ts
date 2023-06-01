@@ -2,18 +2,21 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 import { authOptions } from './auth/[...nextauth]'
 import { getServerSession } from 'next-auth/next'
+import { Cart } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-async function getWishList(userId: string) {
+async function DeleteCart(id: number) {
   try {
-    const response = await prisma.wishList.findUnique({
+    const response = await prisma.cart.delete({
       where: {
-        userId: userId,
+        id: id,
       },
     })
+
     console.log(response)
-    return response?.productIds.split(',')
+
+    return response
   } catch (error) {
     console.error(error)
   }
@@ -29,16 +32,15 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const session = await getServerSession(req, res, authOptions)
+  const { id } = JSON.parse(req.body)
   if (session == null) {
     res.status(200).json({ items: [], message: 'no Session' })
     return
   }
 
   try {
-    if (session.user) {
-      const wishlist = await getWishList(String(session.id))
-      res.status(200).json({ items: wishlist, message: 'Success' })
-    }
+    const wishlist = await DeleteCart(id)
+    res.status(200).json({ items: wishlist, message: 'Success' })
   } catch {
     res.status(400).json({ message: 'Failed' })
   }
