@@ -19,9 +19,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session: async ({ session, user }) => {
-      console.log('유저', user)
-      console.log('세션', session)
-
       session.id = user.id
       // return Promise.resolve(session)
       return session
