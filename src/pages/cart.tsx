@@ -9,6 +9,8 @@ import { products } from '@prisma/client'
 import { useRouter } from 'next/router'
 import { CATEGORY_MAP } from 'constants/products'
 import { Cart } from '@prisma/client'
+import { OrderItem } from '@prisma/client'
+import { ORDER_QUERY_KEY } from './my'
 
 interface CartItem extends Cart {
   name: string
@@ -20,6 +22,7 @@ export const CART_QUERY_KEY = '/api/get-cart'
 
 export default function CartPage() {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const { data } = useQuery<{ items: CartItem[] }, unknown, CartItem[]>(
     [CART_QUERY_KEY],
@@ -53,9 +56,42 @@ export default function CartPage() {
     }
   )
 
+  const { mutate: addOrder } = useMutation<
+    unknown,
+    unknown,
+    Omit<OrderItem, 'id'>[],
+    any
+  >(
+    (items) =>
+      fetch('/api/add-order', {
+        method: 'POST',
+        body: JSON.stringify({ items }),
+      })
+        .then((data) => data.json())
+        .then((res) => res.items),
+    {
+      onMutate: () => {
+        queryClient.invalidateQueries([ORDER_QUERY_KEY])
+      },
+      onSuccess: () => {
+        router.push('/my')
+      },
+    }
+  )
+
   const handleOrder = () => {
-    //TODO: 주문하기 기능 구현
-    alert(`${JSON.stringify(data)} 주문하기`)
+    if (data == null) {
+      return
+    }
+    addOrder(
+      data.map((cart) => ({
+        productId: cart.productId,
+        price: cart.price,
+        amount: cart.amount,
+        quantity: cart.quantity,
+      }))
+    )
+    alert(`${JSON.stringify(data)} 주문`)
   }
 
   return (
