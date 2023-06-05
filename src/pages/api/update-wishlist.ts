@@ -62,7 +62,10 @@ export default async function handler(
   }
 
   try {
-    const wishlist = await updateWishList(String(session.id), String(productId))
+    const wishlist = await updateWishList(
+      String((session as any).id),
+      String(productId)
+    )
     res.status(200).json({ items: wishlist, message: 'Success' })
   } catch {
     res.status(400).json({ message: 'Failed' })

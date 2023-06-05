@@ -40,7 +40,7 @@ export default async function handler(
   }
 
   try {
-    const wishlist = await addCart(String(session.id), item)
+    const wishlist = await addCart(String((session as any).id), item)
     res.status(200).json({ items: wishlist, message: 'Success' })
   } catch {
     res.status(400).json({ message: 'Failed' })

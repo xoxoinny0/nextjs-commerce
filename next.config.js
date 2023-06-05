@@ -10,6 +10,7 @@ const nextConfig = {
       'raw.githubusercontent.com',
       'image.msscdn.net',
       'lh3.googleusercontent.com',
+      'i.ibb.co',
     ],
   },
 }

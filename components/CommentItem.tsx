@@ -5,6 +5,7 @@ import format from 'date-fns/format'
 import { CommentItemType } from 'src/pages/products/[id]'
 import CustomEditor from './Editor'
 import { EditorState, convertFromRaw } from 'draft-js'
+import AutoSizeImage from './AutoSizeImage'
 
 export default function CommentItem({ item }: { item: CommentItemType }) {
   return (
@@ -37,6 +38,11 @@ export default function CommentItem({ item }: { item: CommentItemType }) {
           readOnly
           noPadding
         />
+      </div>
+      <div style={{ display: 'flex' }}>
+        {item.images?.split(',').map((image, idx) => (
+          <AutoSizeImage key={idx} src={image} size={150} />
+        ))}
       </div>
     </Wrapper>
   )
