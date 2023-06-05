@@ -36,30 +36,6 @@ export const authOptions: NextAuthOptions = {
       // return session
     },
   },
-
-  // callbacks: {
-  //   session({ session, token, user }) {
-  //     return session // The return type will match the one returned in `useSession()`
-  //   },
-  // },
-
-  // 여기부터
-  // callbacks: {
-  //   async session({ session, token }: { session: Session; token: JWT }) {
-  //     console.log(token)
-  //     // session.user.id = session.user
-
-  //     // session.user.id = token.sub;
-
-  //     if (session.user) {
-  //       // session.user.id = token.idToken
-  //     console.log(session,"제발요")
-
-  //     }
-
-  //     return Promise.resolve(session)
-  //     // return session;
-  //   },
-  // },
+  secret: process.env.NEXTAUTH_URL,
 }
 export default NextAuth(authOptions)
