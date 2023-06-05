@@ -37,7 +37,7 @@ export default async function handler(
 ) {
   const session = await getServerSession(req, res, authOptions)
   const { item } = JSON.parse(req.body)
-  if (session == null || session.id !== item.userId) {
+  if (session == null || (session as any).id !== item.userId) {
     res
       .status(200)
       .json({ items: [], message: 'no Session or Invalid Session' })

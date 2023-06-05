@@ -36,7 +36,7 @@ export default async function handler(
 
   try {
     if (session.user) {
-      const wishlist = await getWishList(String(session.id))
+      const wishlist = await getWishList(String((session as any).id))
       res.status(200).json({ items: wishlist, message: 'Success' })
     }
   } catch {

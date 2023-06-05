@@ -45,7 +45,10 @@ export default async function handler(
 
   try {
     if (session.user) {
-      const wishlist = await getComment(String(session.id), Number(orderItemId))
+      const wishlist = await getComment(
+        String((session as any).id),
+        Number(orderItemId)
+      )
       res.status(200).json({ items: wishlist, message: 'Success' })
     }
   } catch {

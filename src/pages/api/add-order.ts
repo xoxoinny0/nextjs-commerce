@@ -65,7 +65,11 @@ export default async function handler(
   }
 
   try {
-    const wishlist = await addOrder(String(session.id), items, orderInfo)
+    const wishlist = await addOrder(
+      String((session as any).id),
+      items,
+      orderInfo
+    )
     res.status(200).json({ items: wishlist, message: 'Success' })
   } catch {
     res.status(400).json({ message: 'Failed' })
