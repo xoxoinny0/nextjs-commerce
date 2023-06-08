@@ -24,8 +24,6 @@ export default function Home() {
 
   const debouncedKeyword = useDebounce<string>(keyword)
 
-  console.log(process.env.NEXTAUTH_TEST, '환경변수 출력테스트')
-
   const { data: categories } = useQuery<
     { items: categories[] },
     unknown,
