@@ -11,7 +11,7 @@ export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.CLIENT_ID ?? '',
-      clientSecret: process.env.NEXTAUTH_SECRET ?? '',
+      clientSecret: process.env.CLIENT_SECRET ?? '',
     }),
   ],
   session: {
@@ -25,6 +25,6 @@ export const authOptions: NextAuthOptions = {
       return Promise.resolve(session)
     },
   },
-  // secret: process.env.CLIENT_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 }
 export default NextAuth(authOptions)
