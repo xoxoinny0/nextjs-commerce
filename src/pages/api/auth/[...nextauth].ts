@@ -24,7 +24,6 @@ export const authOptions: NextAuthOptions = {
       // console.log("유저 :", user)
 
       ;(session as any).id = user.id
-      console.log('세션(제발~~~~)', session)
 
       return Promise.resolve(session)
 
