@@ -20,19 +20,9 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session: async ({ session, user }) => {
-      // console.log("세션 :", session)
-      // console.log("유저 :", user)
-
       ;(session as any).id = user.id
 
       return Promise.resolve(session)
-
-      // if (session.user) {
-      //   session.user.id = user.id
-      // }
-      // return Promise.resolve(session)
-
-      // return session
     },
   },
   secret: process.env.CLIENT_SECRET,
