@@ -25,6 +25,6 @@ export const authOptions: NextAuthOptions = {
       return Promise.resolve(session)
     },
   },
-  // secret: process.env.CLIENT_SECRET,
+  secret: process.env.CLIENT_SECRET,
 }
 export default NextAuth(authOptions)
