@@ -186,7 +186,10 @@ export default function Products(props: {
   return (
     <>
       {product != null && productId != null ? (
-        <div className="flex flex-row">
+        <div
+          className="flex flex-row"
+          style={{ justifyContent: 'space-evenly' }}
+        >
           <div
             style={{
               maxWidth: 600,
@@ -195,7 +198,6 @@ export default function Products(props: {
           >
             <Carousel
               animation="fade"
-              // autoplay
               withoutControls
               wrapAround
               speed={10}
@@ -220,16 +222,16 @@ export default function Products(props: {
                 </div>
               ))}
             </div>
-            {editorState != null && (
+            {/* {editorState != null && (
               <CustomEditor editorState={editorState} readOnly />
-            )}
-            <div>
-              <p className="text-2xl font-semibold">후기</p>
+            )} */}
+            {/* <div>
+              <p className="text-2xl font-semibold mb-3">후기</p>
               {props.comments &&
                 props.comments.map((comment, idx) => (
                   <CommentItem key={idx} item={comment} />
                 ))}
-            </div>
+            </div> */}
           </div>
           <div style={{ maxWidth: 600 }} className="flex flex-col space-x-6">
             <div className="text-lg text-zinc-400">
@@ -320,7 +322,17 @@ export default function Products(props: {
             </Button>
 
             <div className="text-sm text-zinc-300">
-              등록 : {format(new Date(product.price), 'yyyy년 M월 d일')}
+              등록 : {format(new Date(product.createdAt), 'yyyy년 M월 d일')}
+            </div>
+            {editorState != null && (
+              <CustomEditor editorState={editorState} readOnly />
+            )}
+            <div>
+              <p className="text-2xl font-semibold mb-3">후기</p>
+              {props.comments &&
+                props.comments.map((comment, idx) => (
+                  <CommentItem key={idx} item={comment} />
+                ))}
             </div>
           </div>
         </div>
