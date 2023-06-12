@@ -1,4 +1,5 @@
 export const CATEGORY_MAP = ['Sneakers', 'T-Shirt', 'Pants', 'Cap', 'Hoodie']
+// export const CATEGORY_MAP = ['Sneakers', 'T-Shirt', 'Cap', 'Hoodie', 'Pants']
 
 export const TAKE = 9
 
