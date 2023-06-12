@@ -220,7 +220,7 @@ const Item = (props: CartItem) => {
 
         return { previous }
       },
-      onError: (error, _, context) => {
+      onError: (__, _, context) => {
         queryClient.setQueryData([CART_QUERY_KEY], context.previous)
       },
       onSuccess: () => {
@@ -249,7 +249,7 @@ const Item = (props: CartItem) => {
 
         return { previous }
       },
-      onError: (error, _, context) => {
+      onError: (__, _, context) => {
         queryClient.setQueryData([CART_QUERY_KEY], context.previous)
       },
       onSuccess: () => {

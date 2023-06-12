@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 import { authOptions } from './auth/[...nextauth]'
 import { getServerSession } from 'next-auth/next'
-import { Cart } from '@prisma/client'
 
 const prisma = new PrismaClient()
 

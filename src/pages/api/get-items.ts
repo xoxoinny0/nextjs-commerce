@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiResponse } from 'next'
 import { Client } from '@notionhq/client'
 
 const notion = new Client({
@@ -30,10 +30,7 @@ type Data = {
   message: string
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+export default async function handler(res: NextApiResponse<Data>) {
   try {
     const response = await getItems()
     res.status(200).json({ items: response?.results, message: 'Success' })

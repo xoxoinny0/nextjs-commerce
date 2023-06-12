@@ -1,19 +1,14 @@
 import CustomEditor from '@components/Editor'
 import { Comment, OrderItem, products } from '@prisma/client'
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
+import { EditorState, convertFromRaw } from 'draft-js'
 import { GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Carousel from 'nuka-carousel'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import format from 'date-fns/format'
 import { CATEGORY_MAP } from 'constants/products'
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Button } from '@mantine/core'
 import { IconHeart, IconHeartbeat, IconShoppingCart } from '@tabler/icons-react'
 import { useSession } from 'next-auth/react'
@@ -22,6 +17,7 @@ import { Cart } from '@prisma/client'
 import { CART_QUERY_KEY } from 'src/pages/cart'
 import { ORDER_QUERY_KEY } from 'src/pages/my'
 import CommentItem from '@components/CommentItem'
+import Head from 'next/head'
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const product = await fetch(
@@ -97,7 +93,7 @@ export default function Products(props: {
 
         return { previous }
       },
-      onError: (error, _, context) => {
+      onError: (__, _, context) => {
         queryClient.setQueryData([WISHLIST_QUERY_KEY], context.previous)
       },
       onSuccess: () => {
@@ -196,6 +192,10 @@ export default function Products(props: {
               marginRight: 52,
             }}
           >
+            <Head>
+              <title>{product.name}</title>
+              <meta name="description" content="commerce service" />
+            </Head>
             <Carousel
               animation="fade"
               withoutControls

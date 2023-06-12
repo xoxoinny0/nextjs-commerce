@@ -1,6 +1,5 @@
 import CustomEditor from '@components/Editor'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
-import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Carousel from 'nuka-carousel'

@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react'
 import CustomEditor from '@components/Editor'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 import { Slider } from '@mantine/core'
-import Image from 'next/image'
 import AutoSizeImage from '@components/AutoSizeImage'
 
 export default function CommentEdit() {

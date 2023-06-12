@@ -1,8 +1,7 @@
 import Image from 'next/image'
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { CountControl } from '@components/CountControl'
 import { IconX } from '@tabler/icons-react'
-import styled from '@emotion/styled'
 import { Badge, Button } from '@mantine/core'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Orders } from '@prisma/client'
@@ -37,8 +36,6 @@ const ORDER_STATUS_MAP = [
 export const ORDER_QUERY_KEY = '/api/get-order'
 
 export default function MyPage() {
-  const router = useRouter()
-
   const { data } = useQuery<{ items: OrderDetail[] }, unknown, OrderDetail[]>(
     [ORDER_QUERY_KEY],
     () =>
@@ -103,7 +100,7 @@ const DetailItem = (props: OrderDetail) => {
 
         return { previous }
       },
-      onError: (error, _, context) => {
+      onError: (__, _, context) => {
         queryClient.setQueryData([ORDER_QUERY_KEY], context.previous)
       },
       onSuccess: () => {
@@ -215,10 +212,3 @@ const Item = (props: OrderItemDetail & { status: number }) => {
     </div>
   )
 }
-
-const Row = styled.div`
-  display: flex;
-  * ~ * {
-    margin-left: auto;
-  }
-`

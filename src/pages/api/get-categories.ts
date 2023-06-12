@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -18,10 +18,7 @@ type Data = {
   message: string
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+export default async function handler(res: NextApiResponse<Data>) {
   try {
     const products = await getCategories()
     res.status(200).json({ items: products, message: 'Success' })

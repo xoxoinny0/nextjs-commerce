@@ -1,5 +1,5 @@
 import { categories, products } from '@prisma/client'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { Pagination } from '@mantine/core'
 import { CATEGORY_MAP, TAKE } from 'constants/products'
@@ -11,12 +11,10 @@ import { IconSearch } from '@tabler/icons-react'
 import useDebounce from 'hooks/useDebounce'
 // 캐시 활용
 import { useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
 export default function Home() {
   const router = useRouter()
-  const { data: session } = useSession()
   const [activePage, setPage] = useState(1)
   const [selectedCategory, setCategory] = useState<string>('-1')
   const [selectedFilter, setFilter] = useState<string | null>(FILTERS[0].value)
