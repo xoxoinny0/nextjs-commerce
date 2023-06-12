@@ -1,5 +1,4 @@
-# Daily Closet
-[데일리 클로셋 구경하기🤍](https://nextjs-commerce-red-nine.vercel.app/){:target="_blank"}
+# [Daily Closet](https://nextjs-commerce-red-nine.vercel.app/)
 개인 프로젝트<br>
 의류를 기반으로 한 온라인 쇼핑몰 👕👖
 > 2023.05.29~2023.06.05
