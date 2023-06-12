@@ -16,6 +16,7 @@ export default function Header() {
     <div className="mt-12 mb-12">
       <div className="w-full flex h-50 items-center">
         <IconHome onClick={() => router.push('/')} />
+        <span className="ml-3 font-semibold">당신의 옷장, Daily Closet ო̤̮</span>
         <span className="m-auto" />
         <IconHeart className="mr-4" onClick={() => router.push('/wishlist')} />
         <IconShoppingCart
